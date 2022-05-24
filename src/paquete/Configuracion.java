@@ -19,7 +19,7 @@ public class Configuracion {
 
 	    cfg.store(
 		    new FileOutputStream("C:\\Users\\" + usuario
-			    + "\\eclipse-workspace\\SAP_B1\\archivos\\Configuracion.cfg"),
+			    + "\\eclipse-workspace\\SAP_B1\\MATERIALES\\Configuracion.cfg"),
 		    "Fichero de configuracion");
 
 	    System.out.println("PROPIEDAD 1: " + cfg.getProperty("propiedad1"));

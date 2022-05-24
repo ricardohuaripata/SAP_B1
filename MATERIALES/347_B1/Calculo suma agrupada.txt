@@ -1,0 +1,8 @@
+FORMULA A APLICAR AL GROUP BY (AÑO e IC)
+sum(iif(Debit-Credit=0,
+	SIGN(T0.LocTotal),
+	iif(TI.Category='I',-1,1)*SIGN(T1.Credit-T1.Debit)
+	)
+    *
+    (abs(T1.BaseSum)+abs(Debit-Credit))
+) as Total,
