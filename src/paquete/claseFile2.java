@@ -8,30 +8,32 @@ public class claseFile2 {
 
 	File directorio = new File("C:\\Users\\" + System.getProperty("user.name") + "\\eclipse-workspace");
 
-	mostrarArchivos(directorio);
+	String extension = ".java";
+
+	mostrarArchivos(directorio, extension);
 
     }
 
-    public static void mostrarArchivos(File carpeta) {
+    public static void mostrarArchivos(File carpeta, String extension) {
 
 	try {
 
-	    //Filtro filtro = new Filtro();
 	    File ar[] = carpeta.listFiles();
 
 	    for (int i = 0; i < ar.length; i++) {
 
-		System.out.println(ar[i]);
+		if (ar[i].getName().endsWith(".java"))
+		    System.out.println(ar[i]);
 
 		if (ar[i].isDirectory())
-		    mostrarArchivos(ar[i]);
+		    mostrarArchivos(ar[i], extension);
 
 	    }
 
 	}
 
 	catch (Exception e) {
-	    System.err.println("ERROR " + e.getMessage());
+	    System.err.println(e.getMessage());
 	}
 
     }
