@@ -3,39 +3,39 @@ package paquete;
 import java.io.File;
 
 public class claseFile2 {
-	
-	public static void main(String[] args) {
 
-		File directorio = new File("C:\\Users\\RicardoAlonzoHuaripa\\eclipse-workspace");
+    public static void main(String[] args) {
 
-		mostrarArchivos(directorio);
+	File directorio = new File("C:\\Users\\" + System.getProperty("user.name") + "\\eclipse-workspace");
 
-	}
+	String extension = ".java";
 
-	public static void mostrarArchivos(File carpeta) {
+	mostrarArchivos(directorio, extension);
 
-		try {
+    }
 
-			Filtro filtro = new Filtro(".java");
-			File ar[] = carpeta.listFiles(filtro);
-			
-			for (int i = 0; i < ar.length; i++) {
-				
-				filtro.accept(carpeta, ar[i].getName());
+    public static void mostrarArchivos(File carpeta, String extension) {
 
-				System.out.println(ar[i]);
+	try {
 
-				if (ar[i].isDirectory())
-					mostrarArchivos(ar[i]);
+	    File ar[] = carpeta.listFiles();
 
-			}
+	    for (int i = 0; i < ar.length; i++) {
 
-		}
+		if (ar[i].getName().endsWith(".java"))
+		    System.out.println(ar[i]);
 
-		catch (Exception e) {
-			System.err.println("ERROR " + e.getMessage());
-		}
+		if (ar[i].isDirectory())
+		    mostrarArchivos(ar[i], extension);
+
+	    }
 
 	}
+
+	catch (Exception e) {
+	    System.err.println(e.getMessage());
+	}
+
+    }
 
 }
