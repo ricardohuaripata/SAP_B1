@@ -5,34 +5,38 @@ import java.io.*;
 
 public class Configuracion {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-	String usuario = System.getProperty("user.name");
+		String usuario = System.getProperty("user.name");
 
-	Properties cfg = new Properties();
+		Properties cfg = new Properties();
 
-	cfg.setProperty("propiedad1", "empty");
-	cfg.setProperty("propiedad2", "empty");
-	cfg.setProperty("propiedad3", "empty");
+		cfg.setProperty("db", "SBODemoES");
+		cfg.setProperty("server", "localhost");
+		cfg.setProperty("user", "sa");
+		cfg.setProperty("password", "12345Ab##");
+		cfg.setProperty("port", "1433");
+		cfg.setProperty("url", "jdbc:sqlserver://" + cfg.getProperty("server") + ":" + cfg.getProperty("port")
+				+ ";databaseName=" + cfg.getProperty("db") + ";encrypt=false");
+		
+		cfg.getProperty("driver","com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-	try {
+		try {
 
-	    cfg.store(
-		    new FileOutputStream(
-			    "C:\\Users\\" + usuario + "\\eclipse-workspace\\SAP_B1\\MATERIALES\\Configuracion.cfg"),
-		    "Fichero de configuracion");
+			cfg.store(
+					new FileOutputStream(
+							"C:\\Users\\" + usuario + "\\eclipse-workspace\\SAP_B1\\MATERIALES\\Configuracion.cfg"),
+					"Fichero de configuracion");
+			
+			System.out.println("Fichero establecido");
 
-	    System.out.println("PROPIEDAD 1: " + cfg.getProperty("propiedad1"));
-	    System.out.println("PROPIEDAD 2: " + cfg.getProperty("propiedad2"));
-	    System.out.println("PROPIEDAD 3: " + cfg.getProperty("propiedad3"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-	} catch (IOException e) {
-	    e.printStackTrace();
 	}
-
-    }
 
 }
