@@ -19,7 +19,7 @@ public class Configuracion {
 		cfg.setProperty("url", "jdbc:sqlserver://" + cfg.getProperty("server") + ":" + cfg.getProperty("port")
 				+ ";databaseName=" + cfg.getProperty("db") + ";encrypt=false");
 		
-		cfg.getProperty("driver","com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		cfg.setProperty("driver","com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
 		try {
 
@@ -28,7 +28,7 @@ public class Configuracion {
 							"C:\\Users\\" + usuario + "\\eclipse-workspace\\SAP_B1\\MATERIALES\\Configuracion.cfg"),
 					"Fichero de configuracion");
 			
-			System.out.println("Fichero establecido");
+			System.out.println("Fichero creado");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

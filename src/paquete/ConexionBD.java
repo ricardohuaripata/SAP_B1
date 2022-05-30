@@ -18,22 +18,14 @@ public class ConexionBD {
 		
 		cfg.load(new BufferedReader(new FileReader(dir_configuracion)));
 		
-		System.out.println(cfg.getProperty("user"));
-
-		String db = cfg.getProperty("db");
-		String server = cfg.getProperty("server");
 		String user = cfg.getProperty("user");
 		String password = cfg.getProperty("password");
-		String port = cfg.getProperty("port");
-
 		String url = cfg.getProperty("url");
 
 		Class.forName(cfg.getProperty("driver"));
-
 		System.out.println("Driver establecido");
 
 		Connection conexion = DriverManager.getConnection(url, user, password);
-
 		System.out.println("Conexion establecida");
 
 		conexion.close();
