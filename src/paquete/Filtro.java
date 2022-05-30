@@ -5,17 +5,17 @@ import java.io.FilenameFilter;
 
 public class Filtro implements FilenameFilter {
 
-	String extension;
+    String extension;
 
-	Filtro(String extension) {
-		this.extension = extension;
-	}
+    Filtro(String extension) {
+	this.extension = extension;
+    }
 
-	@Override
-	public boolean accept(File dir, String name) {
+    @Override
+    public boolean accept(File dir, String name) {
 
-		return name.endsWith(extension);
+	return name.endsWith(extension);
 
-	}
+    }
 
 }
