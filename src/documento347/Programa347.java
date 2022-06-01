@@ -42,7 +42,6 @@ public class Programa347 {
 		break;
 
 	    case 2:
-		escribirFichero2();
 		break;
 
 	    }
@@ -61,8 +60,8 @@ public class Programa347 {
 	boolean repetir;
 
 	System.out.println("\n=== MENU ====");
-	System.out.println("1 - opcion");
-	System.out.println("2 - opcion");
+	System.out.println("1 - ");
+	System.out.println("2 - ");
 
 	do {
 	    repetir = false;
@@ -107,88 +106,44 @@ public class Programa347 {
 	return fechaValida;
     }
 
-    public static void consulta() {
-
-	Scanner sc = new Scanner(System.in);
-	String sql = "select * from OADM";
-
-	try {
-
-	    Statement st = conexion.createStatement();
-
-	    ResultSet rs = st.executeQuery(sql);
-	    while (rs.next()) {
-		System.out.println(rs.getString(1));
-
-	    }
-
-	    st.close();
-	    rs.close();
-
-	} catch (SQLException e) {
-	    System.out.println(e);
-	} catch (InputMismatchException e) {
-	    System.out.println(e);
-	} catch (Exception e) {
-	    System.out.println(e);
-	}
-
-    }
-
     public static void metodo() {
 
 	Scanner sc = new Scanner(System.in);
+	Statement st;
+	ResultSet rs;
 
+	String sql = cfg.getProperty("consulta347");
 	LocalDate fechaGeneracion = leerFechaValida("Fecha de generacion del fichero", "yyyy-MM-dd");
 	int anyoGeneracion = fechaGeneracion.getYear();
-	System.out.println("Año: " + anyoGeneracion);
-
-    }
-
-    public static void escribirFichero() {
 
 	try {
 
-	    BufferedWriter writer = new BufferedWriter(new FileWriter(cfg.getProperty("dir_347")));
+	    File file = new File(cfg.getProperty("dir_347"));
 
-	    writer.write("0000000000000000000000001");
-	    writer.newLine();
-	    writer.write("0000000000000000000000001");
-	    writer.close();
+	    st = conexion.createStatement();
 
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
+	    RandomAccessFile raf = new RandomAccessFile(file, "rw");
 
-    }
-    
-    public static void escribirFichero2() {
+	    rs = st.executeQuery(sql);
 
-	try {
-	    
-	    File file = new File("C:\\Users\\" + System.getProperty("user.name") + "\\eclipse-workspace\\SAP_B1\\MATERIALES\\347.dat");
+	    while (rs.next()) {
 		
-	    RandomAccessFile raf = new RandomAccessFile(file,"rw");
-	    
-	    raf.writeInt(1);
-	    raf.writeDouble(3.95);
-	    raf.writeBoolean(false);
-	    
-	    // boolean = 1, int = 4, double = 8, char = 2, string = 2*length
-	    // 4 + 8 + 1 = 13
-	    // primera posicion es int por tanto empieza en 0 y termina en 3, 
-	    // segunda posicion es double por lo que empieza en 4 y termina en 11
-	    raf.seek(0);
-	    System.out.println(raf.readInt());
-	    raf.seek(4);
-	    System.out.println(raf.readDouble());
-	    raf.seek(12);
-	    System.out.println(raf.readBoolean());
-	    
-	    raf.close();
+		System.out.println("------------");
+		System.out.println("INTERLOCUTOR");
+		System.out.println(rs.getInt("Ejercicio"));
+		System.out.println(rs.getString("NIF"));
+		System.out.println(rs.getString("Nombre"));
+		System.out.println(rs.getString("Provincia"));
+		System.out.println(rs.getString("Pais"));
+		System.out.println(rs.getString("TipoIva"));
+		System.out.println(rs.getDouble("Total"));
+		System.out.println(rs.getDouble("TotalBase"));
+		System.out.println(rs.getDouble("TotalCuota"));
+
+	    }
 
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    System.err.println(e.getMessage());
 	}
 
     }
