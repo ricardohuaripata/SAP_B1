@@ -6,9 +6,9 @@ public class claseFile2Java {
 
 	public static void main(String[] args) {
 
-		File directorio = new File("C:\\Users\\" + System.getProperty("user.name") + "\\eclipse-workspace");
+		File directorio = new File("C:\\");
 
-		String extension = ".java";
+		String extension = ".bak";
 
 		mostrarArchivos(directorio, extension);
 
