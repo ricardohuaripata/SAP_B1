@@ -8,7 +8,7 @@ public class claseFile2 {
     static FileFilter filtro = new FileFilter() {
 
 	public boolean accept(File file) {
-	    if (file.getName().endsWith(".java") || file.isDirectory())
+	    if (file.getName().endsWith(".bak") || file.isDirectory())
 		return true;
 
 	    return false;
@@ -18,7 +18,7 @@ public class claseFile2 {
 
     public static void main(String[] args) {
 
-	File directorio = new File("C:\\Users\\" + System.getProperty("user.name") + "\\eclipse-workspace");
+	File directorio = new File("C:\\");
 
 	mostrarArchivos(directorio);
 
@@ -34,7 +34,7 @@ public class claseFile2 {
 
 		System.out.println(ar[i]);
 
-		if (ar[i].isDirectory())
+		if (ar[i].isDirectory()==false)
 		    mostrarArchivos(ar[i]);
 
 	    }
