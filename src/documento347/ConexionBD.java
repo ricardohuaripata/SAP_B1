@@ -14,14 +14,14 @@ public class ConexionBD {
 
 	Properties cfg = new Properties();
 
-	String dir_configuracion = "C:\\Users\\" + System.getProperty("user.name")
+	String ruta = "C:\\Users\\" + System.getProperty("user.name")
 		+ "\\eclipse-workspace\\SAP_B1\\MATERIALES\\Configuracion.cfg";
 
-	cfg.load(new BufferedReader(new FileReader(dir_configuracion)));
+	cfg.load(new BufferedReader(new FileReader(ruta)));
 
 	String user = cfg.getProperty("user");
 	String password = cfg.getProperty("password");
-	String url = cfg.getProperty("url");
+	String url = cfg.getProperty("urlSBO");
 
 	Class.forName(cfg.getProperty("driver"));
 	System.out.println("Driver establecido");
