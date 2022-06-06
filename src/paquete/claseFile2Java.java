@@ -4,38 +4,38 @@ import java.io.File;
 
 public class claseFile2Java {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		File directorio = new File("C:\\");
+	File directorio = new File("C:\\");
 
-		String extension = ".bak";
+	String extension = ".bak";
 
-		mostrarArchivos(directorio, extension);
+	mostrarArchivos(directorio, extension);
 
-	}
+    }
 
-	public static void mostrarArchivos(File carpeta, String extension) {
+    public static void mostrarArchivos(File carpeta, String extension) {
 
-		try {
+	try {
 
-			File ar[] = carpeta.listFiles();
+	    File ar[] = carpeta.listFiles();
 
-			for (int i = 0; i < ar.length; i++) {
+	    for (int i = 0; i < ar.length; i++) {
 
-				if (ar[i].getName().endsWith(extension))
-					System.out.println(ar[i]);
+		if (ar[i].getName().endsWith(extension))
+		    System.out.println(ar[i]);
 
-				if (ar[i].isDirectory())
-					mostrarArchivos(ar[i], extension);
+		if (ar[i].isDirectory())
+		    mostrarArchivos(ar[i], extension);
 
-			}
-
-		}
-
-		catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
+	    }
 
 	}
+
+	catch (Exception e) {
+	    System.err.println(e.getMessage());
+	}
+
+    }
 
 }

@@ -7,56 +7,115 @@ import java.util.Scanner;
 
 public class Ejercicio3RAF {
 
-    static RandomAccessFile raf;
+    static Scanner sc = new Scanner(System.in);
+    static Scanner sc2 = new Scanner(System.in);
+    static final int ocupacion = 72;
 
-    public static void main(String[] args) throws IOException { // 79-84 examen
+    public static void main(String[] args) {
 
-	Scanner sc = new Scanner(System.in);
+	File file = new File("C:\\ficheros\\productos.dat");
 
-	File f = new File("C:\\files\\productos.dat");
+	System.out.println("Cuanto productos vas a insertar?");
+	int cantidad = sc.nextInt();
 
-	raf = new RandomAccessFile(f, "rw");
+	insertarProducto(cantidad, file);
 
-	int codproducto;
-	String nombre;
-	double precio;
-	long pos = f.length();
-	
-	for (int i = 0; i < 12; i++) {
+	System.out.println("Desea modificar algun campo? (Y/N)");
+	String respuesta = sc2.nextLine();
 
-	    System.out.print("\nCodigo del producto: ");
-	    codproducto = sc.nextInt();
-	    sc.nextLine();
+	if (respuesta.equalsIgnoreCase("Y")) {
 
-	    System.out.print("Nombre del producto: ");
-	    nombre = sc.nextLine();
+	    System.out.println("Introduce el orden del producto que deseas modificar, actualmente hay "
+		    + file.length() / ocupacion + " productos");
 
-	    StringBuffer nombrebuff = new StringBuffer(nombre);
-	    nombrebuff.setLength(30);
+	    int pos = sc.nextInt();
 
-	    System.out.print("Precio del producto: ");
-	    precio = sc.nextDouble();
-
-	    pos += (4 + (2 * 30) + 8);
-
-	    guardarProducto(pos, codproducto, nombrebuff, precio);
+	    modificarProducto((pos * ocupacion) - ocupacion, file);
 
 	}
+    }
 
-	raf.close();
+    public static void insertarProducto(int cantidad, File file) {
+
+	try {
+
+	    RandomAccessFile raf = new RandomAccessFile(file, "rw");
+
+	    long pos = file.length();
+
+	    for (int i = 0; i < cantidad; i++) {
+
+		raf.seek(pos);
+		System.out.println("Codigo del producto");
+		int codproducto = sc.nextInt();
+
+		System.out.println("Nombre del producto");
+		StringBuffer nombre = new StringBuffer(sc2.nextLine());
+		nombre.setLength(30);
+
+		System.out.println("Precio del producto");
+		double precio = sc.nextDouble();
+
+		raf.writeInt(codproducto);
+		raf.writeChars(nombre.toString());
+		raf.writeDouble(precio);
+
+		pos += ocupacion;
+
+	    }
+
+	    raf.close();
+
+	} catch (Exception e) {
+	    System.out.println(e.getMessage());
+	}
 
     }
 
-    public static void guardarProducto(long pos, int codproducto, StringBuffer nombre, double precio) {
+    public static void modificarProducto(long pos, File file) {
 
 	try {
+
+	    int campoModificacion[] = { 0, 4, 60 };
+	    RandomAccessFile raf = new RandomAccessFile(file, "rw");
+	    int posCampo;
+
+	    do {
+		System.out.println("Introduce orden del campo que vas a modificar, elige entre 1 y 3");
+		posCampo = sc.nextInt();
+	    } while (posCampo < 1 || posCampo > 3);
+
+	    pos += campoModificacion[posCampo - 1];
+
 	    raf.seek(pos);
-	    raf.writeInt(codproducto);
-	    raf.writeChars(nombre.toString());
-	    raf.writeDouble(precio);
+
+	    switch (posCampo) {
+
+	    case 1:
+		System.out.println("Codigo del producto");
+		int codproducto = sc.nextInt();
+		raf.writeInt(codproducto);
+		break;
+
+	    case 2:
+		System.out.println("Nombre del producto");
+		StringBuffer nombre = new StringBuffer(sc2.nextLine());
+		nombre.setLength(30);
+		raf.writeChars(nombre.toString());
+		break;
+
+	    case 3:
+		System.out.println("Precio del producto");
+		double precio = sc.nextDouble();
+		raf.writeDouble(precio);
+		break;
+
+	    }
+
+	    raf.close();
 
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    System.out.println(e.getMessage());
 	}
 
     }

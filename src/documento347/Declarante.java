@@ -40,10 +40,6 @@ public class Declarante {
 
     }
 
-    public StringBuilder[] getAtributo() {
-	return atributo;
-    }
-
     @Override
     public String toString() {
 	return atributo[0].toString() + atributo[1].toString() + atributo[2].toString() + atributo[3].toString()

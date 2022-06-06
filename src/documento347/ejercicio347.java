@@ -27,22 +27,26 @@ public class ejercicio347 {
 
 	cargarCfg();
 	conexion();
+	
+	if (conexion() == true) {
 
-	try {
+	    try {
 
-	    System.out.println("Escribrir anyo de declaracion");
-	    int anyo = sc.nextInt();
+		System.out.println("Escribrir anyo de declaracion");
+		int anyo = sc.nextInt();
 
-	    long num_declaracion = leerNdeclaracion();
+		long num_declaracion = leerNdeclaracion();
 
-	    File fichero = new File(cfg.getProperty("dir_347.txt"));
+		File fichero = new File(cfg.getProperty("dir_347.txt"));
 
-	    escribirDeclaracion(fichero, anyo, num_declaracion);
-	    conexionSBO.close();
-	    conexionDeclaraciones.close();
+		escribirDeclaracion(fichero, anyo, num_declaracion);
+		conexionSBO.close();
+		conexionDeclaraciones.close();
 
-	} catch (Exception e) {
-	    System.err.println(e.getMessage());
+	    } catch (Exception e) {
+		System.err.println(e.getMessage());
+	    }
+
 	}
 
     }
@@ -56,18 +60,20 @@ public class ejercicio347 {
 	}
     }
 
-    public static void conexion() {
+    public static boolean conexion() {
 	try {
 	    Class.forName(cfg.getProperty("driver"));
 	    conexionSBO = DriverManager.getConnection(cfg.getProperty("urlSBO"), cfg.getProperty("user"),
 		    cfg.getProperty("password"));
 	    conexionDeclaraciones = DriverManager.getConnection(cfg.getProperty("urlDeclaraciones"),
 		    cfg.getProperty("user"), cfg.getProperty("password"));
+	    return true;
 	} catch (Exception e) {
 	    System.err.println(e.getMessage());
+	    return false;
 	}
     }
-
+    
     public static long leerNdeclaracion() {
 	boolean repetir = true;
 	long num = 0;
@@ -93,7 +99,7 @@ public class ejercicio347 {
 
     public static void escribirDeclaracion(File salida, int anyo, long num_declaracion) {
 	try {
-	    BufferedWriter bw = new BufferedWriter(new FileWriter(salida, Charset.forName("ISO-8859-1")));
+	    FileWriter bw = new FileWriter(salida, Charset.forName("ISO-8859-1"));
 
 	    Statement st = conexionSBO.createStatement();
 	    Statement st2 = conexionSBO.createStatement();
@@ -113,22 +119,21 @@ public class ejercicio347 {
 		ResultSet rs2 = st2.executeQuery("exec declarados347 " + anyo);
 
 		while (rs2.next()) {
-		    bw.newLine();
 		    Declarado declarado = new Declarado(anyo, declarante.getNif(), rs2.getString("NIF"), " ",
 			    rs2.getString("Nombre"), "D", rs2.getInt("provincia"), rs2.getString("pais"), " ", "A",
 			    rs2.getString("signo_anual"), rs2.getLong("Total"), " ", " ", 0, " ", 0, 0,
-			    // trimestre 1 consulta pendiente
+			    // trimestre 1 pendiente
 			    rs2.getString("signo_anual"), rs2.getLong("Total"), "0", 0,
-			    // trimestre 2 consulta pendiente
+			    // trimestre 2 pendiente
 			    rs2.getString("signo_anual"), rs2.getLong("Total"), "0", 0,
-			    // trimestre 3 consulta pendiente
+			    // trimestre 3 pendiente
 			    rs2.getString("signo_anual"), rs2.getLong("Total"), "0", 0,
-			    // trimestre 4 consulta pendiente
+			    // trimestre 4 pendiente
 			    rs2.getString("signo_anual"), rs2.getLong("Total"), "0", 0,
 
 			    rs2.getString("pais"), rs2.getString("NIF"), " ", "0", 0, " ");
 
-		    bw.write(declarado.toString());
+		    bw.write("\n"+declarado.toString());
 		    System.out.println(declarado.toString());
 
 		}
